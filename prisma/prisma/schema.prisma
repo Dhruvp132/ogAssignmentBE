@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Posts {
+    postId      String    @id @default(uuid())
+    Content     String
+    DateCreated DateTime  @default(now())
+    Like        Boolean?
+    DisLike     Boolean?
+    Replies     Replies[] @relation("PostReplies")
+}
+
+model Replies {
+    id          String    @id @default(uuid())
+    postId      String    
+    parentId    String?   
+    DateCreated DateTime  @default(now())
+    Content     String
+    Like        Boolean?  @default(false)
+    DisLike     Boolean?  @default(false)
+    Post        Posts     @relation("PostReplies", fields: [postId], references: [postId], onDelete: Cascade)
+    ParentReply Replies?  @relation("ReplyReplies", fields: [parentId], references: [id], onDelete: Cascade)
+    ChildReplies Replies[] @relation("ReplyReplies")
+    @@index([DateCreated])
+}

@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "prisma generate",
+    "build": "prisma generate --schema=backend/prisma/schema.prisma",
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "cors": "^2.8.5",

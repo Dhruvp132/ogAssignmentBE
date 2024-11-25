@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "prisma generate --schema=backend/prisma/schema.prisma",
+    "prebuild" : "cd prisma && npx prisma generate", 
+    "build" :  "npm run start",
     "start": "node index.js"
   },
   "dependencies": {
